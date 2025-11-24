@@ -5,7 +5,7 @@
 ![Language](https://img.shields.io/badge/Target-PHP-blue?style=for-the-badge&logo=php)
 
 ## 📖 Project Overview
-This repository documents a security analysis of the **OWASP Mutillidae II** vulnerable web application.
+This repository documents a security analysis of the **OWASP Mutillidae II** vulnerable web application. 
 
 The goal of this project was to implement **Static Application Security Testing (SAST)** into the development lifecycle. Instead of using pre-built rule sets, I developed **custom Semgrep rules** to identify specific coding flaws that lead to critical security vulnerabilities.
 
@@ -48,8 +48,11 @@ This rule flags any SQL `SELECT` statement that contains a PHP variable.
   message: "SAST ALERT: Possible SQL Injection. Variable used directly in SQL."
   severity: ERROR
   languages: [php]
+```
 
 ### Rule 2: Reflected XSS Detection
+This rule flags `echo` statements but allows them if `htmlspecialchars` is used.
+```yaml
 - id: sast-xss-check
   patterns:
     - pattern: echo $VAR;
@@ -57,3 +60,33 @@ This rule flags any SQL `SELECT` statement that contains a PHP variable.
   message: "SAST ALERT: Possible XSS. Variable echoed without HTML encoding."
   severity: WARNING
   languages: [php]
+```
+
+---
+
+## 🚀 How to Replicate This Scan
+
+**Prerequisites:** Python 3.x and Semgrep installed.
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/jeromearsany/Mutillidae-SAST-Analysis.git
+    cd Mutillidae-SAST-Analysis
+    ```
+
+2.  **Run the Semgrep Scan:**
+    Target the `src` directory using the custom config file.
+    ```bash
+    semgrep --config sast-rules/sast-custom-rules.yaml src
+    ```
+
+3.  **Interpret Results:**
+    - 🔴 **ERROR:** Indicates a high-confidence SQL Injection.
+    - 🟡 **WARNING:** Indicates a potential XSS vulnerability.
+
+---
+
+## 👤 Author
+**Jerome Arsany**  
+*Cybersecurity Program | Fall 2025*  
+*Secure Software Development Lab*
