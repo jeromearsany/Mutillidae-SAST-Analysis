@@ -87,6 +87,5 @@ This rule flags `echo` statements but allows them if `htmlspecialchars` is used.
 ---
 
 ## 👤 Author
-**Jerome Arsany**  
-*Cybersecurity Program | Fall 2025*  
-*Secure Software Development Lab*
+**Jerome Arsany Mansour Farah**   
+*Secure Software Development Course*
