@@ -1,0 +1,18 @@
+rules:
+  - id: sast-sqli-check
+    patterns:
+      - pattern: |
+          $query = "SELECT ... $VAR ...";
+      - pattern-not: |
+          $query = "SELECT ... " . $mysqli->real_escape_string(...) . " ...";
+    message: "SAST ALERT: Possible SQL Injection. Variable used directly in SQL."
+    languages: [php]
+    severity: ERROR
+
+  - id: sast-xss-check
+    patterns:
+      - pattern: echo $VAR;
+      - pattern-not: echo htmlspecialchars(...);
+    message: "SAST ALERT: Possible XSS. Variable echoed without HTML encoding."
+    languages: [php]
+    severity: WARNING
